@@ -1,0 +1,26 @@
+{
+  "name": "movies-explorer-api",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "start": "nodemon index.js",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/adievme/movies-explorer-api.git"
+  },
+  "author": "Adiev Insaf",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/adievme/movies-explorer-api/issues"
+  },
+  "homepage": "https://github.com/adievme/movies-explorer-api#readme",
+  "dependencies": {
+    "express": "^4.17.2"
+  },
+  "devDependencies": {
+    "nodemon": "^2.0.15"
+  }
+}
