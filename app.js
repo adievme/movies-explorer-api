@@ -1,16 +1,16 @@
+require('dotenv').config();
+
 const express = require('express');
 const mongoose = require('mongoose');
 const { errors } = require('celebrate');
 
 const routes = require('./routes/index');
-const { login, createUser } = require('./controllers/users');
 const NotFoundError = require('./errors/NotFoundError');
-const { userValidate, loginValidate } = require('./validator/validator');
 
 const { requestLogger, errorLogger } = require('./middlewares/logger');
 // const cors = require('./middlewares/cors');
 
-const { PORT = 3000 } = process.env;
+const { PORT = 3000, NODE_ENV, MONGO_URL } = process.env;
 
 const app = express();
 
@@ -26,15 +26,13 @@ app.get('/crash-test', () => {
   }, 0);
 });
 
-app.post('/signin', loginValidate, login);
-app.post('/signup', userValidate, createUser);
-
 app.use(routes);
+
 app.use(() => {
   throw new NotFoundError('Ресурс не найден');
 });
 
-mongoose.connect('mongodb://localhost:27017/bitfilmsdb', {
+mongoose.connect(NODE_ENV === 'production' ? MONGO_URL : 'mongodb://localhost:27017/moviesdb', {
   useNewUrlParser: true,
 });
 

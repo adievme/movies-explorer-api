@@ -21,6 +21,7 @@ const createMovie = (req, res, next) => {
     image,
     trailer,
     thumbnail,
+    movieId,
     nameRU,
     nameEN,
   } = req.body;
@@ -35,6 +36,7 @@ const createMovie = (req, res, next) => {
     trailer,
     thumbnail,
     owner: req.user._id,
+    movieId,
     nameRU,
     nameEN,
   })
@@ -56,8 +58,7 @@ const deleteMovie = (req, res, next) => {
     .then((movie) => {
       if (movie.owner.toString() !== req.user._id) {
         throw new ForbiddenError('Вы не можете удалить сохраненный фильм чужого пользователя');
-      }
-      Movie.deleteOne({ _id: req.params.id })
+      } return Movie.deleteOne({ _id: req.params.id })
         .then(() => res.status(200).send({ message: 'Фильм удалён из сохраненных' }));
     })
     .catch((err) => {

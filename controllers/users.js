@@ -19,19 +19,22 @@ const getUser = (req, res, next) => {
 };
 
 // обновляет информацию о пользователе (email и имя)
-const updateUser = (req, res, next) => {
-  const { email, name } = req.body;
-
-  return User.findByIdAndUpdate(
-    req.user._id,
-    { email, name },
-    { new: true, runValidators: true }, // обработчик then получит на вход обновлённую запись
-  )
-    .orFail(() => {
-      throw new NotFoundError('Пользователь по указанному _id не найден');
-    })
-    .then((user) => res.status(200).send(user))
-    .catch(next);
+const updateUser = async (req, res, next) => {
+  try {
+    const { email, name } = req.body;
+    const isExist = await User.findOne({ email });
+    if (isExist) {
+      throw new ConflictError('Пользователь с таким email уже существует.');
+    }
+    const user = await User.findByIdAndUpdate(
+      req.user._id,
+      { email, name },
+      { new: true, runValidators: true }, // обработчик then получит на вход обновлённую запись
+    );
+    return res.send(user);
+  } catch (err) {
+    return next(err);
+  }
 };
 
 const createUser = (req, res, next) => {
