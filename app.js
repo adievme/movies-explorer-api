@@ -8,13 +8,13 @@ const routes = require('./routes/index');
 const NotFoundError = require('./errors/NotFoundError');
 
 const { requestLogger, errorLogger } = require('./middlewares/logger');
-// const cors = require('./middlewares/cors');
+const cors = require('./middlewares/cors');
 
 const { PORT = 3000, NODE_ENV, MONGO_URL } = process.env;
 
 const app = express();
 
-// app.use(cors);
+app.use(cors);
 
 app.use(express.json());
 
