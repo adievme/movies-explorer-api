@@ -1,1 +1,1 @@
-https://api.movexp.nomoredomains.work/
+http://api.movexp.nomoredomains.work/
